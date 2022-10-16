@@ -5,20 +5,23 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "nodemon server.js"
+    "dev": "nodemon server.js"
   },
   "author": "edp region iv",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "mysql2": "^2.3.3",
     "telegraf": "^4.10.0"
   },
   "devDependencies": {
     "eslint": "^8.25.0",
     "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
+    "eslint-plugin-markdown": "^3.0.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
