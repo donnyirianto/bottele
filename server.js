@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
 import { Telegraf } from "telegraf";
+// import * as cron from "node-cron";
 
 dotenv.config();
 
 const bot = new Telegraf(process.env.TOKEN);
+
 bot.command("start", (ctx) => {
   bot.telegram.sendMessage(
     ctx.chat.id,
@@ -13,7 +15,7 @@ bot.command("start", (ctx) => {
 });
 
 bot.hears(/\/help/, async (ctx) => {
-  console.log(ctx.from);
+  console.log(ctx);
   const resMessage = `
     🚩 Silahkan reply dengan salah satu format di bawah ini:
     1. List BA dalam progress => /ba
@@ -35,7 +37,14 @@ bot.hears(/\/hisba (\S+)/, async (ctx) => {
   ctx.reply(resMessage);
 });
 
-// method that returns image of a dog
+// cron.schedule("*/10 * * * * *", async () => {
+//   console.log("cronjob");
+//   bot.telegram.sendMessage(
+//     process.env.IDGROUP,
+//     "Selamat datang, EDP REGIONAL IV - BA Notification",
+//     {}
+//   );
+// });
 
 bot.launch();
 console.log("Bot EDP REGIONAL IV - BA Notification is running");
