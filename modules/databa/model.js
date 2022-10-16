@@ -1,6 +1,6 @@
 import { query } from "../../helpers/db.js";
 
-const dataHarian = async () => {
+const dataBa = async () => {
   try {
     const data = await query(`SELECT 
       *
@@ -13,4 +13,4 @@ const dataHarian = async () => {
   }
 };
 
-export { dataHarian };
+export { dataBa };

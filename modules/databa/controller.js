@@ -1,13 +1,13 @@
 /* eslint-disable import/prefer-default-export */
 import * as Models from "./model.js";
 
-const dataHarian = async () => {
+const dataBa = async () => {
   try {
-    const data = await Models.dataHarian();
+    const data = await Models.dataBa();
     return data;
   } catch (e) {
     return "Error";
   }
 };
 
-export { dataHarian };
+export { dataBa };
