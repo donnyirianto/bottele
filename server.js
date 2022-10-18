@@ -20,23 +20,30 @@ bot.hears(/\/help/, async (ctx) => {
   console.log(ctx);
   const resMessage = `
     🚩 Silahkan reply dengan salah satu format di bawah ini:
-    1. List BA dalam progress => /ba
-    2. History BA => /hisba KODECABANG
-
+    1. List BA ber-schedule - in progress => /ba KODECABANG
+    2. Last 20 History BA - (Approve) => /hisba KODECABANG
+    3. Pending BA => /pendingba KODECABANG
   `;
 
   await ctx.reply(resMessage);
 });
 
-bot.hears(/\/ba/, async (ctx) => {
-  console.log(`List BA in Progress`);
-  const data = await Modules.dataBa();
+bot.hears(/\/ba (\S+)/, async (ctx) => {
+  console.log(`List BA ber-schedule - in progress`);
+  const kdcab = ctx.match[1];
+  const data = await Modules.dataBa(kdcab);
   ctx.reply(data[0].tanggal);
 });
 
 bot.hears(/\/hisba (\S+)/, async (ctx) => {
   const kdcab = ctx.match[1];
-  const resMessage = `Last History - 20 BA Cabang ${kdcab} `;
+  const resMessage = `Last 20 History BA - (Approve) :: Cabang${kdcab} `;
+  ctx.reply(resMessage);
+});
+
+bot.hears(/\/pendingba (\S+)/, async (ctx) => {
+  const kdcab = ctx.match[1];
+  const resMessage = `Pending BA :: Cabang ${kdcab} `;
   ctx.reply(resMessage);
 });
 
