@@ -1,3 +1,3 @@
-import { dataBa } from "./databa/controller.js";
+import { dataBa, dataBaAktif, dataBaNonAktif } from "./databa/controller.js";
 
-export { dataBa };
+export { dataBa, dataBaAktif, dataBaNonAktif };

@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import { Telegraf } from "telegraf";
-// import * as cron from "node-cron";
+// eslint-disable-next-line import/no-unresolved
+import * as cron from "node-cron";
 import * as Modules from "./modules/index.js";
 
 dotenv.config();
@@ -29,15 +30,19 @@ bot.hears(/\/help/, async (ctx) => {
 });
 
 bot.hears(/\/ba (\S+)/, async (ctx) => {
-  console.log(`List BA ber-schedule - in progress`);
   const kdcab = ctx.match[1];
-  const data = await Modules.dataBa(kdcab);
-  ctx.reply(data[0].tanggal);
+  const data = await Modules.dataBaAktif(kdcab);
+  const pesan = `📚 List BA Aktif Hingga Hari ini \nCabang - ${kdcab} \n${data.join(
+    "\n"
+  )}`;
+  bot.telegram.sendMessage(process.env.IDGROUP, pesan, {
+    parse_mode: "Markdown",
+  });
 });
 
 bot.hears(/\/hisba (\S+)/, async (ctx) => {
   const kdcab = ctx.match[1];
-  const resMessage = `Last 20 History BA - (Approve) :: Cabang${kdcab} `;
+  const resMessage = `Last 20 History BA - (Approve) :: Cabang${kdcab}`;
   ctx.reply(resMessage);
 });
 
@@ -47,14 +52,21 @@ bot.hears(/\/pendingba (\S+)/, async (ctx) => {
   ctx.reply(resMessage);
 });
 
-// cron.schedule("*/10 * * * * *", async () => {
-//   console.log("cronjob");
-//   bot.telegram.sendMessage(
-//     process.env.IDGROUP,
-//     "Selamat datang, EDP REGIONAL IV - BA Notification",
-//     {}
-//   );
-// });
+cron.schedule("00 6,7,8 * * *", async () => {
+  const data = await Modules.dataBaAktif("REG4");
+  const pesan = `🔔 Reminder BA Aktif Hingga Hari ini: \n${data.join("\n")}`;
+  bot.telegram.sendMessage(process.env.IDGROUP, pesan, {
+    parse_mode: "Markdown",
+  });
+});
+
+cron.schedule("00 6,7,8,15,16 * * *", async () => {
+  const data = await Modules.dataBaNonAktif("REG4");
+  const pesan = `🔔 Reminder BA Non Aktif Per Hari ini: \n${data.join("\n")}`;
+  bot.telegram.sendMessage(process.env.IDGROUP, pesan, {
+    parse_mode: "Markdown",
+  });
+});
 
 bot.launch();
 console.log("Bot EDP REGIONAL IV - BA Notification is running");

@@ -20,4 +20,43 @@ const dataBa = async (kdcab) => {
   }
 };
 
-export { dataBa };
+const dataBaAktif = async (kdcab) => {
+  try {
+    const data = await query(`
+    select a.*
+    from m_ticket_query a
+    left join m_branch b on a.kdcab = b.id
+    where 
+    a.reminder ='1'
+    and curdate() <= tanggal_end
+    and a.tiket_status = '3'
+    and b.branch_code = '${kdcab}';
+    `);
+
+    return data;
+  } catch (e) {
+    console.log(e);
+    return "Error";
+  }
+};
+
+const dataBaNonAktif = async (kdcab) => {
+  try {
+    const data = await query(`
+    select a.*
+    from m_ticket_query a
+    left join m_branch b on a.kdcab = b.id
+    where 
+    a.reminder ='1'
+    and curdate() = tanggal_end
+    and a.tiket_status = '3'
+    and b.branch_code = '${kdcab}';
+    `);
+
+    return data;
+  } catch (e) {
+    console.log(e);
+    return "Error";
+  }
+};
+export { dataBa, dataBaAktif, dataBaNonAktif };

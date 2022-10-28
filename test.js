@@ -2,6 +2,8 @@
 import * as Controllers from "./modules/index.js";
 
 (async () => {
-  const data = await Controllers.dataBa("REG4");
-  console.log(data);
+  const pesan = await Controllers.dataBaAktif("REG4");
+  console.log(
+    `Berikut Reminder BA Aktif Hingga Hari ini: \n ${pesan.join("\n")}`
+  );
 })();
