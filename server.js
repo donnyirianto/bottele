@@ -32,17 +32,18 @@ bot.hears(/\/help/, async (ctx) => {
 bot.hears(/\/ba (\S+)/, async (ctx) => {
   const kdcab = ctx.match[1];
   const data = await Modules.dataBaAktif(kdcab);
-  const pesan = `📚 List BA Aktif Hingga Hari ini \nCabang - ${kdcab} \n${data.join(
+  console.log(data);
+  const pesan = `📚 List BA Aktif Hingga Hari ini \nCabang - ${kdcab} \n\n${data.join(
     "\n"
   )}`;
-  bot.telegram.sendMessage(process.env.IDGROUP, pesan, {
+  bot.telegram.sendMessage(ctx.chat.id, pesan, {
     parse_mode: "Markdown",
   });
 });
 
 bot.hears(/\/hisba (\S+)/, async (ctx) => {
   const kdcab = ctx.match[1];
-  const resMessage = `Last 20 History BA - (Approve) :: Cabang${kdcab}`;
+  const resMessage = `Last 20 History BA - (Approve) :: Cabang - ${kdcab}`;
   ctx.reply(resMessage);
 });
 
@@ -52,17 +53,17 @@ bot.hears(/\/pendingba (\S+)/, async (ctx) => {
   ctx.reply(resMessage);
 });
 
-cron.schedule("00 6,7,8 * * *", async () => {
+cron.schedule("00 6,7,8,9 * * *", async () => {
   const data = await Modules.dataBaAktif("REG4");
-  const pesan = `🔔 Reminder BA Aktif Hingga Hari ini: \n${data.join("\n")}`;
+  const pesan = `🔔 Reminder BA Aktif Hingga Hari ini: \n\n${data.join("\n")}`;
   bot.telegram.sendMessage(process.env.IDGROUP, pesan, {
     parse_mode: "Markdown",
   });
 });
 
-cron.schedule("00 6,7,8,15,16 * * *", async () => {
+cron.schedule("05 6,7,8,15,16 * * *", async () => {
   const data = await Modules.dataBaNonAktif("REG4");
-  const pesan = `🔔 Reminder BA Non Aktif Per Hari ini: \n${data.join("\n")}`;
+  const pesan = `‼️ Reminder BA Non Aktif Per Hari ini: \n\n${data.join("\n")}`;
   bot.telegram.sendMessage(process.env.IDGROUP, pesan, {
     parse_mode: "Markdown",
   });

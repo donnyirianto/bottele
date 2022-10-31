@@ -23,6 +23,8 @@ Tanggal Akhir: ${r.tanggal_end}
 *Keterangan :* _${r.keterangan}_`
         );
       });
+    } else {
+      pesan.push(`✅ _Tidak ada BA yang Aktif hari ini_`);
     }
 
     return pesan;
@@ -44,6 +46,8 @@ Tanggal Akhir: ${r.tanggal_end}
 *Keterangan :* _${r.keterangan}_`
         );
       });
+    } else {
+      pesan.push(`✅ _Tidak ada BA yang perlu dinonaktifkan hari ini_`);
     }
 
     return pesan;
